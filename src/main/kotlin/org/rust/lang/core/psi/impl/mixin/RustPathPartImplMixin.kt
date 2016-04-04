@@ -2,10 +2,7 @@ package org.rust.lang.core.psi.impl.mixin
 
 import com.intellij.lang.ASTNode
 import com.intellij.psi.PsiElement
-import org.rust.lang.core.psi.RustPathPart
-import org.rust.lang.core.psi.RustQualifiedReferenceElement
-import org.rust.lang.core.psi.RustTokenElementTypes
-import org.rust.lang.core.psi.RustViewPath
+import org.rust.lang.core.psi.*
 import org.rust.lang.core.psi.impl.RustNamedElementImpl
 import org.rust.lang.core.resolve.ref.RustQualifiedReferenceImpl
 import org.rust.lang.core.resolve.ref.RustReference
@@ -62,4 +59,10 @@ abstract class RustPathPartImplMixin(node: ASTNode) : RustNamedElementImpl(node)
 
     override val isSelf: Boolean
         get() = self != null
+
+    override fun setName(name: String): PsiElement? {
+        val newName = RustElementFactory.createIdentifier(project, name) ?: return this
+        identifier?.replace(newName)
+        return this
+    }
 }

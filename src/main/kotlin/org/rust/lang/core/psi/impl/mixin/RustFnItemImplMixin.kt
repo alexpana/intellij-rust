@@ -1,10 +1,12 @@
 package org.rust.lang.core.psi.impl.mixin
 
 import com.intellij.lang.ASTNode
+import com.intellij.psi.PsiElement
 import com.intellij.psi.stubs.IStubElementType
 import org.rust.ide.icons.RustIcons
 import org.rust.ide.icons.addTestMark
 import org.rust.lang.core.psi.RustDeclaringElement
+import org.rust.lang.core.psi.RustElementFactory
 import org.rust.lang.core.psi.RustFnItem
 import org.rust.lang.core.psi.iconWithVisibility
 import org.rust.lang.core.psi.impl.RustItemImpl
@@ -31,6 +33,12 @@ abstract class RustFnItemImplMixin : RustItemImpl
     }
 
     val isTest: Boolean get() = queryAttributes.hasAtomAttribute("test")
+
+    override fun setName(name: String): PsiElement? {
+        val newNameElement = RustElementFactory.createIdentifier(project, name) ?: return this
+        identifier.replace(newNameElement)
+        return this
+    }
 
 }
 

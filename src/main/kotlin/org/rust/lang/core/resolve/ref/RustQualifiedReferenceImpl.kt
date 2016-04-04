@@ -49,4 +49,10 @@ internal class RustQualifiedReferenceImpl<T : RustQualifiedReferenceElement>(ele
     override fun bindToElement(element: PsiElement): PsiElement? {
         throw UnsupportedOperationException()
     }
+
+    override fun handleElementRename(newElementName: String?): PsiElement? {
+        newElementName ?: return element
+        element.setName(newElementName)
+        return element
+    }
 }
