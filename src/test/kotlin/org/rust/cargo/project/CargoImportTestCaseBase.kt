@@ -11,8 +11,8 @@ import com.intellij.openapi.projectRoots.Sdk
 import com.intellij.openapi.projectRoots.impl.ProjectJdkImpl
 import org.assertj.core.api.Assertions.assertThat
 import org.rust.cargo.CargoConstants
-import org.rust.cargo.project.module.util.findExternCrateByName
-import org.rust.cargo.project.module.util.targets
+import org.rust.cargo.toolchain.findExternCrateByName
+import org.rust.cargo.toolchain.targets
 import org.rust.cargo.project.settings.CargoProjectSettings
 
 abstract class CargoImportTestCaseBase : ExternalSystemImportingTestCase() {
