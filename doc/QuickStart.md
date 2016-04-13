@@ -1,35 +1,40 @@
 **Bold text** denotes the names of actions you can type in the **Find Action**
   dialog (`Ctrl+Shift+A`).
 
-After you have installed the plugin and a recent version of Cargo, you can
-**import project**. "Importing" means that the IDE will talk with Cargo to learn
-about project structure and dependencies. You can do this from the welcome
-screen.
+After you have installed the plugin you can **open** a project. This can be done from the welckome screen in any IDE:
 
-![welcome](https://cloud.githubusercontent.com/assets/1711539/14211294/e0ce72c8-f835-11e5-9bfd-061098d70243.png)
+![idea-open](https://cloud.githubusercontent.com/assets/1711539/14491299/9e663e30-0180-11e6-9744-def829cbe329.png)
 
-Select `Cargo.toml`.
+![py-open](https://cloud.githubusercontent.com/assets/1711539/14491095/85f23ea4-017f-11e6-9809-fb4c7cbb248e.png)
 
-![select-cargo-toml](https://cloud.githubusercontent.com/assets/1711539/14211300/e89a41a8-f835-11e5-8564-ae7237a5dba3.png)
+Select the directory with the project.
 
-Next you should tell the IDE which version of Cargo it should use. To do this
-you need to set up a Rust SDK. **S**oftware **D**evelopment **K**it is an IDE
-term which means a set of tools used to write programs in a particular language.
-In case of Rust, the SDK is basically `cargo` and `rustc` programms. Press the
-"New..." button. The IDE should find an SDK automatically, but you can manually
-point it to the location of Cargo. **Important**: you need Cargo from at least
-1.8.0 toolchain, which is currently in beta. You can use any version of `rustc`.
+![select-directory](https://cloud.githubusercontent.com/assets/1711539/14491098/85f750f6-017f-11e6-81ec-f1fcab920c8f.png)
 
-![add-sdk-1](https://cloud.githubusercontent.com/assets/1711539/14211305/f36b5040-f835-11e5-9fb3-1d3e05052b05.png)
+With IntelliJ IDEA specifically you can also **import project** from sources.
 
-![add-sdk-2](https://cloud.githubusercontent.com/assets/1711539/14211306/f385c9a2-f835-11e5-8673-4af824d12720.png)
+![idea-import](https://cloud.githubusercontent.com/assets/1711539/14211294/e0ce72c8-f835-11e5-9bfd-061098d70243.png)
 
-![add-skd-3](https://cloud.githubusercontent.com/assets/1711539/14211307/f3aaaa9c-f835-11e5-986f-fa54e96149fd.png)
+![from-sources](https://cloud.githubusercontent.com/assets/1711539/14491096/85f346f0-017f-11e6-8f68-138a65d2cfb9.png)
+
+Next you should tell the IDE which version of Cargo it should use. Open
+**settings** (`Ctrl+Alt+S`) and find *Cargo* tab under *Languages & Frameworks*.
+Here you can specify location for Rust tools (it should be deduced automatically
+for conventional setup). If the location is valid, Rust version will be
+displayed. Plugin automatically watches `Cargo.toml` for changes and
+communicates with Cargo to learn about project structure and dependencies. If
+you disable this behavior, or if you want to force a project update, you can use
+**Refresh Cargo project** action. Don't forget to click **Apply** to actually
+save the settings.
+
+![settings](https://cloud.githubusercontent.com/assets/1711539/14491097/85f717d0-017f-11e6-98d6-0f60ee0e2016.png)
 
 Wait until Cargo downloads all project dependencies. To check that everything is
-working, try **Goto Symbol** (`Ctrl+Alt+Shift+N`) and type something.
+working, try **Goto Symbol** (`Ctrl+Alt+Shift+N`) and type something. Note that
+dependencies are present under external libraries. **Goto Symbol** should also
+work for items from the external crates.
 
-![go-to-symbol](https://cloud.githubusercontent.com/assets/1711539/14211909/2b504076-f839-11e5-86b5-a848c5504522.png)
+![go-to-symbol](https://cloud.githubusercontent.com/assets/1711539/14491412/44200bd0-0181-11e6-9587-10e4a07fa961.png)
 
 To execute Cargo tasks from within the IDE, you need to set up a [Run
 Configuration](https://www.jetbrains.com/idea/help/creating-and-editing-run-debug-configurations.html).
@@ -52,8 +57,9 @@ You should be able to compile and **Run** (`Shift+f10`) your application from th
 In general updating the plugin should just work even if we change things we
 cache or persist. However given the current rate of change we do not test for
 this and so it is possible for data from the previous versions to confuse the
-newer version of the plugin. You can **Refresh all external projects** to force a
-reimport of Cargo project. You can use **Invalidata caches/Restart** to rebuild indices.
+newer version of the plugin. You can **Refresh Cargo project** to force a
+reimport of Cargo project. You can use **Invalidata caches/Restart** to rebuild
+indices.
 
 # Tips
 
