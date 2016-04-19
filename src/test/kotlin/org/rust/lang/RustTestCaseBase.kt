@@ -70,6 +70,16 @@ abstract class RustTestCaseBase : LightPlatformCodeInsightFixtureTestCase(), Rus
             camelCaseName.split("(?=[A-Z])".toRegex())
                 .map { it.toLowerCase() }
                 .joinToString("_")
+
+        @JvmStatic
+        fun rustSources(): VirtualFile {
+            val sdkArchiveFile = LocalFileSystem.getInstance()
+                .findFileByPath("${RustTestCase.testResourcesPath}/rustc-src.zip")
+
+            return checkNotNull(sdkArchiveFile?.let { JarFileSystem.getInstance().getJarRootForLocalFile(it) }) {
+                "Rust sources archive not found. Run `./gradlew test` to download the archive."
+            }
+        }
     }
 
     open class RustProjectDescriptor : LightProjectDescriptor() {
@@ -93,14 +103,7 @@ abstract class RustTestCaseBase : LightPlatformCodeInsightFixtureTestCase(), Rus
             val sdk = ProjectJdkImpl("RustTest", RustSdkType.INSTANCE)
             val sdkModificator = sdk.sdkModificator
 
-            val sdkArchiveFile = LocalFileSystem.getInstance()
-                .findFileByPath("${RustTestCase.testResourcesPath}/rustc-src.zip")
-
-            val sdkFile = checkNotNull(
-                sdkArchiveFile?.let { JarFileSystem.getInstance().getJarRootForLocalFile(it) },
-                { "Rust sources archive not found. Run `./gradlew test` to download the archive." }
-            )
-            sdkModificator.addRoot(sdkFile, OrderRootType.CLASSES)
+            sdkModificator.addRoot(rustSources(), OrderRootType.CLASSES)
             sdkModificator.commitChanges()
             return sdk
         }
